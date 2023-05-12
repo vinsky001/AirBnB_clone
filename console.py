@@ -1,89 +1,129 @@
 #!/usr/bin/env python3
-""" define a HBNB class """
+""" Defines the console class
+which is the entry point of the Airbnb Project
+"""
 
 
-import cmd
+from cmd import Cmd
+
+
+
+classes = storage.models
 
 
 class HBNBCommand(cmd.Cmd):
     """ does various HBNB commands """
     prompt = "(hbnb) "
 
-    def do_create(self, line):
-        """ creates a new class instance and prints its str rep """
-        if not line:
-            print("** class name missing **")
-            return
-        cls = getattr(self, line)
-        if cls is None:
-            print("** class doesn't exist **")
-            return
-        new_instance = cls()
-        models.storage.save()
-        print(new_instance.id)
-
-    def do_show(self, line):
-        """ prints the string rep of an instance based on cls name """
-        words = line.split()
-        if len(words) < 2:
-            print("** class name missing **")
-            return
-        class_name = words[1]
-        if class_name not in models.storage.models:
-            print("** class doesn't exist **")
-            return
-        if len(words) < 3:
-            print("** instance id missing **")
-            return
-        id = words[2]
-        obj = models.storage.find_by_id(class_name, id)
-        if obj is None:
-            print("** no instance found **")
-            return
-        print(obj)
-
-    def do_destroy(self, line):
-        """ deletes an instance based on class name and id """
-        words = line.split()
-        if len(words) < 2:
-            print("** class name missing **")
-            return
-        class_name = words[1]
-        if class_name not in models.storage.models:
-            print("** class doesn't exist **")
-            return
-        if len(words) < 3:
-            print("** instance id missing **")
-            return
-        id = words[2]
-        new_instance = models.storage.find_by_id(class_name, id)
-        if new_instance is None:
-            print("** no instance found **")
-            return
-        models.storage.delete_by_id(class_name, id)
-
-    def do_all(self,line):
-        """ prints str rep of all instances """
-        if line:
-            class_name = line.split()[0]
-            if class_name not in models.storage.models:
-                print("** class doesn't exist **")
-                return
-            objs = models.storage.find_all(class_name)
-            print([str(obj) for obj in objs()])
-
+    # Commands
     def emptyline(self):
-        """ does nothing after pressing ENTER """
+        """Overides empty line to do nothing """
         pass
 
     def do_quit(self, line):
-        """ facilitates quitting the console """
+       """Quits the programme """
         return True
 
     def do_EOF(self, line):
-        """ facilitates exiting the console """
+
+        """Closes the programme in non-interactive state/mode """
         return True
 
+    def do_create(self, args):
+        """creates a new instance of a model name ex.
+        $ create ModelName : Our case : BaseModel.
+        Prints an error if name is missing or name doesn't exist
+        """
+        args, n = parse(args)
 
-if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+        if not n:
+            print("** class name missing **")
+        elif args[0] not in classes:
+            print("** class doesn't exist **")
+        elif n == 1:
+            # temp = classes[args[0]]()
+            temp = eval(args[0])()
+            print(temp.id)
+            temp.save()
+        else:
+            print("** Too many argument for create **")
+            pass
+
+    def do_show(self, arg):
+        """Show an Instance of Model base on its ModelName and id eg.
+        $ show MyModel instance_id
+        Print error message if either MyModel or instance_id is missing
+        Print an Error message for wrong MyModel or instance_id"""
+        args, n = parse(arg)
+
+        if not n:
+            print("** class name missing **")
+        elif n == 1:
+            print("** instance id missing **")
+        elif n == 2:
+            try:
+                inst = storage.find_by_id(*args)
+                print(inst)
+            except ModelNotFoundError:
+                print("** class doesn't exist **")
+            except InstanceNotFoundError:
+                print("** no instance found **")
+        else:
+            print("** Too many argument for show **")
+            pass
+
+    def do_destroy(self, arg):
+        """Deletes an Instance of Model base on its ModelName and id."""
+        args, n = parse(arg)
+
+        if not n:
+            print("** class name missing **")
+        elif n == 1:
+            print("** instance id missing **")
+        elif n == 2:
+            try:
+                storage.delete_by_id(*args)
+            except ModelNotFoundError:
+                print("** class doesn't exist **")
+            except InstanceNotFoundError:
+                print("** no instance found **")
+        else:
+            print("** Too many argument for destroy **")
+            pass
+
+    def do_all(self, args):
+        """Usage: all or all <class> or <class>.all()
+        Display string representations of all instances of a given class.
+        If no class is specified, displays all instantiated objects."""
+        args, n = parse(args)
+
+        if n < 2:
+            try:
+                print(storage.find_all(*args))
+            except ModelNotFoundError:
+                print("** class doesn't exist **")
+        else:
+            print("** Too many argument for all **")
+            pass
+
+    def do_update(self, arg):
+        """Updates an instance base on its id eg
+        $ update Model id field value
+        Throws errors for missing arguments"""
+        args, n = parse(arg)
+        if not n:
+            print("** class name missing **")
+        elif n == 1:
+            print("** instance id missing **")
+        elif n == 2:
+            print("** attribute name missing **")
+        elif n == 3:
+            print("** value missing **")
+        else:
+            try:
+                storage.update_one(*args[0:4])
+            except ModelNotFoundError:
+                print("** class doesn't exist **")
+            except InstanceNotFoundError:
+                print("** no instance found **")
+
