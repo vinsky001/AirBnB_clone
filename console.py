@@ -7,7 +7,6 @@ which is the entry point of the Airbnb Project
 from cmd import Cmd
 
 
-
 classes = storage.models
 
 
@@ -21,11 +20,10 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_quit(self, line):
-       """Quits the programme """
+        """Quits the programme """
         return True
 
     def do_EOF(self, line):
-
         """Closes the programme in non-interactive state/mode """
         return True
 
@@ -126,4 +124,3 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             except InstanceNotFoundError:
                 print("** no instance found **")
-
