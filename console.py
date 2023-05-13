@@ -5,12 +5,13 @@ which is the entry point of the Airbnb Project
 
 
 from cmd import Cmd
+from models import storage
 
 
 classes = storage.models
 
 
-class HBNBCommand(cmd.Cmd):
+class HBNBCommand(Cmd):
     """ does various HBNB commands """
     prompt = "(hbnb) "
 
