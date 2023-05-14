@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ Defines the console class
 which is the entry point of the Airbnb Project
 """
@@ -24,17 +24,17 @@ class HBNBCommand(Cmd):
     prompt = "(hbnb) "
 
     # Commands
+    def do_EOF(self, args):
+        """Exits the programme in non-interactive mode"""
+        return True
+
+    def do_quit(self, args):
+        """Quits commands that closes the programme"""
+        return True
+
     def emptyline(self):
         """Overides empty line to do nothing """
         pass
-
-    def do_quit(self, line):
-        """Quits the programme """
-        return True
-
-    def do_EOF(self, line):
-        """Closes the programme in non-interactive state/mode """
-        return True
 
     def do_create(self, args):
         """creates a new instance of a model name ex.
@@ -143,11 +143,6 @@ class HBNBCommand(Cmd):
             return self.handle_class_methods(arg)
         return Cmd.default(self, arg)
 
-    def parse(line: str):
-        """splits a line by spaces"""
-        args = shlex.split(line)
-        return args, len(args)
-
     def do_models(self, arg):
         """Print all registered Models"""
         print(*classes)
@@ -177,6 +172,11 @@ class HBNBCommand(Cmd):
             print("** invalid syntax **")
             pass
 
-
+def parse(line: str):
+    """Splits lines by spaces"""
+    args = shlex.split(line)
+    return args, len(args)
+ 
+        
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
