@@ -83,7 +83,8 @@ class TestBaseModelTwo(unittest.TestCase):
 
     def test_str_representation(self):
         """ test for str rep """
-        expected = "[BaseModel] ({}) {}".format(self.my_model.id, self.my_model.__dict__)
+        expected = "[BaseModel] ({}) {}".format(
+            self.my_model.id, self.my_model.__dict__)
         self.assertEqual(str(self.my_model), expected)
 
     def test_to_dict_method(self):
