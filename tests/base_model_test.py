@@ -135,6 +135,12 @@ class TestBaseModelThree(unittest.TestCase):
         self.assertEqual(city.state_id, state_id)
 
     def test_amenity(self):
+        """ test for amenity """
+        amenity = Amenity()
+        amenity.name = "Free Wifi"
+        self.assertEqual(amenity.name, "Free Wifi")
+
+    def test_review(self):
 
 
 if __name__ == "__main__":
