@@ -25,6 +25,10 @@ class BaseModel:
             return
 
         """using Key words (deserialize)"""
+        if 'id' not in kwargs:
+            kwargs['id'] = str(uuid4())
+        self.id = kwargs['id']
+
         for Key, val in kwargs.items():
             if Key == "__class_":
                 continue
