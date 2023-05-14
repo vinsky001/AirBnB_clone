@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-
 """
 Defines  errors in file storage """
+
+
 class ModelNotFoundError(Exception):
     """Raised when an unknown module is passed"""
     def __init__(self, arg="BaseModel"):

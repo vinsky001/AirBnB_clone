@@ -172,11 +172,12 @@ class HBNBCommand(Cmd):
             print("** invalid syntax **")
             pass
 
+
 def parse(line: str):
     """Splits lines by spaces"""
     args = shlex.split(line)
     return args, len(args)
- 
-        
+
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
