@@ -4,8 +4,15 @@
 
 import unittest
 from models.base_model import BaseModel
+from models import storage
 from datetime import datetime
 import json
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from uuid import uuid4
 
 
 class TestBaseModel(unittest.TestCase):
@@ -107,6 +114,14 @@ class TestBaseModelTwo(unittest.TestCase):
         """ test for created at and updated at types """
         self.assertIsInstance(self.my_model.created_at, datetime)
         self.assertIsInstance(self.my_model.updated_at, datetime)
+
+
+class TestBaseModelThree(unittest.TestCase):
+    """ define unittests for base model three """
+
+    def setUp(self):
+        """ setup for proceeding tests three """
+        
 
 
 if __name__ == "__main__":
