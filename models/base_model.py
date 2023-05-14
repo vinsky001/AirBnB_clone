@@ -16,7 +16,6 @@ class BaseModel:
         """ deserialize and serialize a class """
 
         """initialize  if nothing is passed"""
-
         if kwargs == {}:
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
