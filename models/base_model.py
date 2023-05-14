@@ -21,7 +21,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
-            models.storage.new()
+            models.storage.new(self)
             return
 
         """using Key words (deserialize)"""
