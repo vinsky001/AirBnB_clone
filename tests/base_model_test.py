@@ -141,6 +141,16 @@ class TestBaseModelThree(unittest.TestCase):
         self.assertEqual(amenity.name, "Free Wifi")
 
     def test_review(self):
+        """ test for review """
+        place_id = uuid4()
+        user_id = uuid4()
+        review = Review()
+        review.place_id = place_id
+        review.user_id = user_id
+        review.text = "Good"
+        self.assertEqual(review.place_id, place_id)
+        self.assertEqual(review.user_id, user_id)
+        self.assertEqual(review.text, "Good")
 
 
 if __name__ == "__main__":
