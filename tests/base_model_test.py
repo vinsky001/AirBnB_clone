@@ -123,7 +123,18 @@ class TestBaseModelThree(unittest.TestCase):
         """ test for state """
         state = State()
         state.name = "Kenya"
-        self.assertEqual(state.name, "Kenya") 
+        self.assertEqual(state.name, "Kenya")
+
+    def test_city(self):
+        """ test for city """
+        state_id = uuid4()
+        city = City()
+        city.name = "Nairobi"
+        city.state_id = state_id
+        self.assertEqual(city.name, "Nairobi")
+        self.assertEqual(city.state_id, state_id)
+
+    def test_amenity(self):
 
 
 if __name__ == "__main__":
