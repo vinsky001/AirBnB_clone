@@ -119,9 +119,11 @@ class TestBaseModelTwo(unittest.TestCase):
 class TestBaseModelThree(unittest.TestCase):
     """ define unittests for base model three """
 
-    def setUp(self):
-        """ setup for proceeding tests three """
-        
+    def test_state(self):
+        """ test for state """
+        state = State()
+        state.name = "Kenya"
+        self.assertEqual(state.name, "Kenya") 
 
 
 if __name__ == "__main__":
